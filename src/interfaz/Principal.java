@@ -83,10 +83,22 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel2.setText("No. de Filas:");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, 20));
+
+        txtNumerodeFilas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumerodeFilasKeyTyped(evt);
+            }
+        });
         jPanel2.add(txtNumerodeFilas, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 30, -1));
 
         jLabel3.setText("No. de Columnas: ");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, -1, 20));
+
+        txtNumerodeColumnas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumerodeColumnasKeyTyped(evt);
+            }
+        });
         jPanel2.add(txtNumerodeColumnas, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, 30, -1));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos Iniciales"));
@@ -256,7 +268,8 @@ public class Principal extends javax.swing.JFrame {
                 Helper.mensaje(this, "El numero de filas no puede ser uno", 1);
                 txtNumerodeFilas.requestFocusInWindow();
             } else if (nc == 1) {
-                Helper.mensaje(this, "El numero de columnas no puede ser uno", 1);
+                Helper.mensaje(this, "El numero de columnas no puede ser uno", 1); 
+                txtNumerodeColumnas.requestFocusInWindow();         
             } else {
 
                 tm = (DefaultTableModel) tblTablaInicial.getModel();
@@ -400,6 +413,22 @@ public class Principal extends javax.swing.JFrame {
         Helper.habilitarBotones(botonesH);
         Helper.deshabilitarBotones(botonesD);
     }//GEN-LAST:event_cmdLlenadoManualActionPerformed
+
+    private void txtNumerodeFilasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumerodeFilasKeyTyped
+       char c = evt.getKeyChar();
+        if (Character.isLetter(c) || Character.isSpaceChar(c) || !Character.isDigit(c)) {
+            getToolkit();
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNumerodeFilasKeyTyped
+
+    private void txtNumerodeColumnasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumerodeColumnasKeyTyped
+       char c = evt.getKeyChar();
+        if (Character.isLetter(c) || Character.isSpaceChar(c) || !Character.isDigit(c)) {
+            getToolkit();
+            evt.consume(); 
+        } 
+    }//GEN-LAST:event_txtNumerodeColumnasKeyTyped
 
     /**
      * @param args the command line arguments
