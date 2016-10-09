@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author rmorales1
+ * @author SP
  */
 public class Helper {
 

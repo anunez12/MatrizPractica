@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author rmorales1
+ * @author SP
  */
 public class Principal extends javax.swing.JFrame {
 
@@ -21,9 +21,9 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
-        JButton botonesH[]={cmdCrear, cmdLimpiar};
-        JButton botonesD[]={cmdLlenadoManual,cmdLlenadoAutomatico,cmdOperacion};
-        
+        JButton botonesH[] = {cmdCrear, cmdLimpiar};
+        JButton botonesD[] = {cmdLlenadoManual, cmdLlenadoAutomatico, cmdOperacion};
+
         Helper.habilitarBotones(botonesH);
         Helper.deshabilitarBotones(botonesD);
     }
@@ -223,24 +223,58 @@ public class Principal extends javax.swing.JFrame {
     private void cmdCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCrearActionPerformed
         int nf, nc;
         DefaultTableModel tm, tm2;
+        if (txtNumerodeFilas.getText().trim().isEmpty()) {
+            Helper.mensaje(this, "Ingrese numero de filas", 2);
+            txtNumerodeFilas.requestFocusInWindow();
+        } else if (txtNumerodeColumnas.getText().trim().isEmpty()) {
+            Helper.mensaje(this, "Ingrese numero de columnas", 2);
+            txtNumerodeColumnas.requestFocusInWindow();
+        } else {
 
-        nf = Integer.parseInt(txtNumerodeFilas.getText());
-        nc = Integer.parseInt(txtNumerodeColumnas.getText());
+            nf = Integer.parseInt(txtNumerodeFilas.getText());
+            nc = Integer.parseInt(txtNumerodeColumnas.getText());
+            if (nf == 0) {
+                Helper.mensaje(this, "El numero de filas para crear la tabla no puede ser cero", 1);
+                txtNumerodeFilas.requestFocusInWindow();
+            } else if (nc == 0) {
+                Helper.mensaje(this, "El numero de columnas para crear la tabla no puede ser cero", 1);
+                txtNumerodeColumnas.requestFocusInWindow();
+            } else if (nf % 2 == 0) {
+                Helper.mensaje(this, "Para crear la matriz debe llenarla con numeros impares", 1);
+                txtNumerodeFilas.requestFocusInWindow();
+            } else if (nc % 2 == 0) {
+                Helper.mensaje(this, "Para crear la matriz debe llenarla con numeros impares", 1);
+                txtNumerodeColumnas.requestFocusInWindow();
+            } else if (nf >= 15) {
+                Helper.mensaje(this, "Peligro al momento de ingresar esta cantidad mayor podria generar un riesgo en la matriz", 3);
+                txtNumerodeFilas.requestFocusInWindow();
 
-        tm = (DefaultTableModel) tblTablaInicial.getModel();
-        tm2 = (DefaultTableModel) tblTablaResultado.getModel();
+            } else if (nc >= 15) {
+                Helper.mensaje(this, "Peligro al momento de ingresar esta cantidad mayor podria generar un riesgo en la matriz", 3);
+                txtNumerodeColumnas.requestFocusInWindow();
+            } else if (nf == 1) {
+                Helper.mensaje(this, "El numero de filas no puede ser uno", 1);
+                txtNumerodeFilas.requestFocusInWindow();
+            } else if (nc == 1) {
+                Helper.mensaje(this, "El numero de columnas no puede ser uno", 1);
+            } else {
 
-        tm.setRowCount(nf);
-        tm.setColumnCount(nc);
+                tm = (DefaultTableModel) tblTablaInicial.getModel();
+                tm2 = (DefaultTableModel) tblTablaResultado.getModel();
 
-        tm2.setRowCount(nf);
-        tm2.setColumnCount(nc);
+                tm.setRowCount(nf);
+                tm.setColumnCount(nc);
 
-        JButton botonesH[]={cmdLlenadoManual,cmdLlenadoAutomatico, cmdLimpiar};
-        JButton botonesD[]={cmdCrear, cmdOperacion};
-        
-        Helper.habilitarBotones(botonesH);
-        Helper.deshabilitarBotones(botonesD);
+                tm2.setRowCount(nf);
+                tm2.setColumnCount(nc);
+
+                JButton botonesH[] = {cmdLlenadoManual, cmdLlenadoAutomatico, cmdLimpiar};
+                JButton botonesD[] = {cmdCrear, cmdOperacion};
+
+                Helper.habilitarBotones(botonesH);
+                Helper.deshabilitarBotones(botonesD);
+            }
+        }
     }//GEN-LAST:event_cmdCrearActionPerformed
 
     private void cmdLlenadoAutomaticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLlenadoAutomaticoActionPerformed
@@ -257,9 +291,9 @@ public class Principal extends javax.swing.JFrame {
 
         }
 
-        JButton botonesH[]={cmdOperacion, cmdLimpiar};
-        JButton botonesD[]={cmdCrear, cmdLlenadoManual, cmdLlenadoAutomatico};
-        
+        JButton botonesH[] = {cmdOperacion, cmdLimpiar};
+        JButton botonesD[] = {cmdCrear, cmdLlenadoManual, cmdLlenadoAutomatico};
+
         Helper.habilitarBotones(botonesH);
         Helper.deshabilitarBotones(botonesD);
 
@@ -269,7 +303,7 @@ public class Principal extends javax.swing.JFrame {
         int op, cantPares;
         op = cmbOperaciones.getSelectedIndex();
         Helper.limpiadoTabla(tblTablaResultado);
-        
+
         switch (op) {
             case 0:
                 cantPares = Helper.cantidadPares(tblTablaInicial);
@@ -287,21 +321,21 @@ public class Principal extends javax.swing.JFrame {
             case 4:
                 Helper.letraH(tblTablaInicial, tblTablaResultado);
                 break;
-                 case 5:
+            case 5:
                 txtResultado.setText(Helper.recorridoUno(tblTablaInicial));
                 break;
-                  case 6:
+            case 6:
                 txtResultado.setText(Helper.recorridoDos(tblTablaInicial));
                 break;
-                      case 7:
+            case 7:
                 txtResultado.setText(Helper.recorridoTres(tblTablaInicial));
                 break;
-                     
+
         }
-        
-        JButton botonesH[]={cmdOperacion,cmdLimpiar};
-        JButton botonesD[]={cmdLlenadoManual,cmdLlenadoAutomatico};
-        
+
+        JButton botonesH[] = {cmdOperacion, cmdLimpiar};
+        JButton botonesD[] = {cmdLlenadoManual, cmdLlenadoAutomatico};
+
         Helper.habilitarBotones(botonesH);
         Helper.deshabilitarBotones(botonesD);
 
@@ -315,12 +349,12 @@ public class Principal extends javax.swing.JFrame {
         cmbOperaciones.setSelectedIndex(0);
         txtResultado.setText("");
 
-       Helper.porDefectoTabla(tblTablaInicial);
-       Helper.porDefectoTabla(tblTablaResultado);
-       
-       JButton botonesH[]={cmdCrear, cmdLimpiar};
-        JButton botonesD[]={cmdLlenadoManual,cmdLlenadoAutomatico,cmdOperacion};
-        
+        Helper.porDefectoTabla(tblTablaInicial);
+        Helper.porDefectoTabla(tblTablaResultado);
+
+        JButton botonesH[] = {cmdCrear, cmdLimpiar};
+        JButton botonesD[] = {cmdLlenadoManual, cmdLlenadoAutomatico, cmdOperacion};
+
         Helper.habilitarBotones(botonesH);
         Helper.deshabilitarBotones(botonesD);
 
@@ -360,9 +394,9 @@ public class Principal extends javax.swing.JFrame {
                 } while (sw == 0);
             }
         }
-        JButton botonesH[]={cmdOperacion, cmdLimpiar};
-        JButton botonesD[]={cmdCrear, cmdLlenadoManual, cmdLlenadoAutomatico};
-        
+        JButton botonesH[] = {cmdOperacion, cmdLimpiar};
+        JButton botonesD[] = {cmdCrear, cmdLlenadoManual, cmdLlenadoAutomatico};
+
         Helper.habilitarBotones(botonesH);
         Helper.deshabilitarBotones(botonesD);
     }//GEN-LAST:event_cmdLlenadoManualActionPerformed
